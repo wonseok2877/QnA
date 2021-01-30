@@ -37,7 +37,7 @@ export class QuestionService {
     }
   }
 
-  async createAnswer(id: number, result: string) {
+  async createAnswer(id: number, result: string, user: string) {
     try {
       if (!id) {
         return {
@@ -59,7 +59,7 @@ export class QuestionService {
           error: 'not found Question',
         };
       }
-      const answer = this.answers.create({ result, question });
+      const answer = this.answers.create({ result, question, user });
 
       await this.answers.save(answer);
 
@@ -67,5 +67,28 @@ export class QuestionService {
         ok: true,
       };
     } catch (error) {}
+  }
+
+  // 사용자 모든 답변 및 질문 가져오기
+  async getAll(user: string) {
+    try {
+      const list = await this.answers.find({ user });
+
+      if (!list[0]) {
+        return {
+          ok: false,
+          error: "not found user's answer",
+        };
+      }
+      return {
+        ok: true,
+        list,
+      };
+    } catch (error) {
+      return {
+        ok: false,
+        error,
+      };
+    }
   }
 }

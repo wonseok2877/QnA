@@ -23,13 +23,13 @@ export class Answer {
 
   @Column()
   @IsString()
-  result: String;
+  result: String; // 답변
 
   @Column()
   @IsString()
-  user: String;
+  user: String; // 사용자
 
-  @ManyToOne((type) => Question, (question) => question.answer)
+  @ManyToOne((type) => Question, (question) => question.answer, { eager: true })
   @JoinTable()
   question: Question;
 }

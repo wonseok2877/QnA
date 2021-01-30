@@ -11,9 +11,18 @@ export class QuestionController {
     return this.questionService.random();
   }
 
+  // 답변 저장
   @Post('/answer/:id')
   postAnswer(@Param('id') id: number, @Body() answer) {
     id = +id;
-    return this.questionService.createAnswer(id, answer.result);
+    return this.questionService.createAnswer(id, answer.result, answer.user);
+  }
+
+  // 사용자 모든 질문 답변 값 반환
+  @Get('/all-answer/:user')
+  getAll(@Param('user') user: string) {
+    console.log(user);
+
+    return this.questionService.getAll(user);
   }
 }
