@@ -25,4 +25,9 @@ export class QuestionController {
 
     return this.questionService.getAll(user);
   }
+
+  @Get('/test')
+  test() {
+    return this.questionService.test();
+  }
 }
